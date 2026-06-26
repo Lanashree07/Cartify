@@ -7,7 +7,7 @@ const products = [
     color: "Black",
     price: 1999,
     countInStock: 15,
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e"
+    image: "photo-1505740420928-5e560c06d30e (1).jpg"
   },
   {
     id: 2,

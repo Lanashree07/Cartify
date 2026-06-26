@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 
 function ProductCard({ product }) {
-
   const addToCart = () => {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    // prevent duplicates
-    const exists = cart.find((item) => item.id === product.id);
+    const exists = cart.find(
+      (item) => item.id === product.id
+    );
 
     if (exists) {
       alert("⚠️ Already in cart!");
@@ -14,27 +14,33 @@ function ProductCard({ product }) {
     }
 
     cart.push(product);
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem(
+      "cart",
+      JSON.stringify(cart)
+    );
 
     alert("✅ Added to cart!");
   };
 
   return (
-    <div style={styles.card}>
-
+    <article style={styles.card}>
       {/* IMAGE */}
       <div style={styles.imgBox}>
         <img
           src={product.image}
-          alt={product.name}
+          alt={`${product.name} - ${product.brand}`}
+          loading="lazy"
+          width="300"
+          height="300"
           style={styles.image}
         />
       </div>
 
       {/* DETAILS */}
       <div style={styles.content}>
-
-        <h3 style={styles.name}>{product.name}</h3>
+        <h3 style={styles.name}>
+          {product.name}
+        </h3>
 
         <p style={styles.meta}>
           {product.brand} • {product.model}
@@ -44,60 +50,74 @@ function ProductCard({ product }) {
           Color: {product.color}
         </p>
 
-        <h2 style={styles.price}>₹{product.price}</h2>
+        <h2 style={styles.price}>
+          ₹{product.price}
+        </h2>
 
-        <p style={{
-          color: product.countInStock > 0 ? "green" : "red",
-          fontWeight: "bold",
-          fontSize: "13px"
-        }}>
-          {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
+        <p
+          style={{
+            color:
+              product.countInStock > 0
+                ? "green"
+                : "red",
+            fontWeight: "bold",
+            fontSize: "13px",
+          }}
+        >
+          {product.countInStock > 0
+            ? "In Stock"
+            : "Out of Stock"}
         </p>
 
         {/* BUTTONS */}
         <div style={styles.btnRow}>
-
           <Link
             to={`/product/${product.id}`}
             style={styles.viewBtn}
+            aria-label={`View details of ${product.name}`}
           >
             View Details
           </Link>
 
           <button
             onClick={addToCart}
+            aria-label={`Add ${product.name} to cart`}
             style={{
               ...styles.cartBtn,
-              opacity: product.countInStock === 0 ? 0.5 : 1,
-              cursor: product.countInStock === 0 ? "not-allowed" : "pointer"
+              opacity:
+                product.countInStock === 0
+                  ? 0.5
+                  : 1,
+              cursor:
+                product.countInStock === 0
+                  ? "not-allowed"
+                  : "pointer",
             }}
-            disabled={product.countInStock === 0}
+            disabled={
+              product.countInStock === 0
+            }
           >
             🛒 Add to Cart
           </button>
-
         </div>
-
       </div>
-    </div>
+    </article>
   );
 }
-
-/* ---------------- STYLES ---------------- */
 
 const styles = {
   card: {
     background: "#fff",
     borderRadius: "15px",
     overflow: "hidden",
-    boxShadow: "0 6px 15px rgba(0,0,0,0.1)",
+    boxShadow:
+      "0 6px 15px rgba(0,0,0,0.1)",
     transition: "0.3s",
-    cursor: "pointer",
   },
 
   imgBox: {
     width: "100%",
-    height: "180px",
+    height: "220px",
     overflow: "hidden",
   },
 
@@ -105,6 +125,7 @@ const styles = {
     width: "100%",
     height: "100%",
     objectFit: "cover",
+    display: "block",
   },
 
   content: {
@@ -113,7 +134,7 @@ const styles = {
   },
 
   name: {
-    fontSize: "16px",
+    fontSize: "18px",
     marginBottom: "5px",
   },
 
@@ -137,7 +158,6 @@ const styles = {
 
   btnRow: {
     display: "flex",
-    justifyContent: "space-between",
     gap: "10px",
     marginTop: "10px",
   },
@@ -149,19 +169,18 @@ const styles = {
     color: "white",
     borderRadius: "8px",
     textDecoration: "none",
-    fontSize: "13px",
     textAlign: "center",
+    fontSize: "13px",
   },
 
   cartBtn: {
     flex: 1,
     padding: "8px",
     background: "#000",
-    color: "white",
+    color: "#fff",
     border: "none",
     borderRadius: "8px",
     fontSize: "13px",
-    cursor: "pointer",
   },
 };
 
